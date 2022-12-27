@@ -9,7 +9,7 @@ app.get("/test",(req, res)=>{
     res.send({status:200, message:"ok"})
     });
     app.get("/:time",(req, res) => {
-    res.send({status:200,message:time})
+    res.send({status:200,message:req.params.time})
     });
 
     app.get("/hello/:id",(req,res) => {
@@ -43,9 +43,20 @@ app.get("/test",(req, res)=>{
                 res.send(hi);
                 });
                 app.get("/movies/read",(req, res) => {
-                res.send({status:200,data:movies})
-                
+                res.send({status:200,data:movies,})
                 });
+                app.get('/movies/read/by-date', (req,res)=>{
+                  res.send( {status:200, data:movies.sort((a,b)=> a.year-b.year)});
+              });
+              app.get("/movies/read/by-rating",(req,res)=>{
+                res.send({status:200, data:movies.sort((a,b)=>b.rating-a.rating)})
+            })
+          
+            app.get("/movies/read/by-title", (req, res) => {
+                res.send(
+                    {status:200,data:movies.sort((a,b)=>(a.title).localeCompare(b.title))})
+               
+            });
                 app.get("/movies/update",(req, res) => {
                 res.send(hi);
                 });
