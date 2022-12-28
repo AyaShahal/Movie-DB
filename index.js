@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-
+app.use(express.json());
 app.get("/", function (req, res) {
 res.send("ok");
 });
@@ -39,9 +39,6 @@ app.get("/test",(req, res)=>{
                 { title: 'Brazil', year: 1985, rating: 8 },
                 { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
                 ]
-                app.get("/movies/create",(req, res) => {
-                res.send(hi);
-                });
                 app.get("/movies/read",(req, res) => {
                 res.send({status:200,data:movies,})
                 });
@@ -66,14 +63,30 @@ app.get("/test",(req, res)=>{
                 res.status(404).send({ status: 404, error: true, message: `the movie ${id} does not exist` });
               }
             });
-                app.get("/movies/update",(req, res) => {
-                res.send(hi);
-                });
-                
+
+            app.get("/movies/create",(req, res) => {
+              res.send(hi);
+              });
+              app.get("/movies/update",(req, res) => {
+                res.send(hi); });
                 app.get("/movies/delete",(req, res) => {
                 res.send(hi);
                 });
-app.listen(port, function () {
-    console.log(`Example app listening on port ${port}!`);
-    });
+              //step8
+              app.post("/movies/add",(req, res) => {
+               if(!req.body.title || !req.body.year || req.body.year.length<4 || isNaN(req.body.year)){
+                res.send({status:403,error:true , message:'you cannot create a movie without providing a title and a year'})
+               }
+               else if(!req.body.rating){
+                req.body.rating = "4";
+               }
+                 
+                const movie1 = { title: req.body.title , year:parseInt(req.body.year),rating: parseInt(req.body.rating)};
+                movies.push(movie1);
+                res.send(movie1);
+                 });
+                
+               app.listen(port, function () {
+            console.log(`Example app listening on port ${port}!`);
+           });
     
