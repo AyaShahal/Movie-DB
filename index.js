@@ -96,7 +96,29 @@ app.get("/test",(req, res)=>{
                 res.send({status:404, error:true, message:"the movie ${ID} does not exist" })
               }
                 })
-              
+                // step10
+                app.put('/movies/update/:id',(req,res) => {
+                  let ID = req.params.id
+                  let title = req.query.title
+                  let year = req.query.year
+                  let rating = req.query.rating
+                if(ID >=0 && ID < movies.length){
+                  if(title && title !== undefined){
+                      movies[ID].title = title;
+                  }
+                  if(rating && !isNaN(rating)){
+                    movies[ID].rating = rating;
+                }
+                if(year && !isNaN(year) && year.length === 4){
+                    movies[ID].year = year;
+                }
+                  res.send({status:200, data:movies})
+                 
+                }
+                else{
+                  res.send({status:404, error:true, message:`The movie ${ID} does not exist`})
+              }
+          })
                
                 
                app.listen(port, function () {
