@@ -85,6 +85,19 @@ app.get("/test",(req, res)=>{
                 movies.push(movie1);
                 res.send(movie1);
                  });
+                //  step9
+                app.delete('/movies/delete/:id',(req,res) => {
+                let ID = req.params.id
+                if (ID >=0 && ID < movies.length){
+                  movies.splice(ID,1);
+                  res.send({status:200,data:movies})
+                }
+              else {
+                res.send({status:404, error:true, message:"the movie ${ID} does not exist" })
+              }
+                })
+              
+               
                 
                app.listen(port, function () {
             console.log(`Example app listening on port ${port}!`);
