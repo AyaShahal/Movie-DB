@@ -1,9 +1,26 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const mongoose = require("mongoose")
-mongoose.connect('mongoodb://localhost/movies')
+const {MongoClient} = require('mongodb');
+
+async function main(){
+  const uri= "mongodb+srv://codi:1234@cluster0.kgskdch.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
+  try {
+    await client.connect();
+} catch (e) {
+    console.error(e);
+} finally {
+    await client.close();
+}
+}
+
+main().catch(console.error);
+
 app.use(express.json());
+
+const userarray = [{username: 'a', password:'a'},{username: 'b', password:'b'}]
+
 app.get("/", function (req, res) {
 res.send("ok");
 });
