@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const mongoose = require("mongoose")
+mongoose.connect('mongoodb://localhost/movies')
 app.use(express.json());
 app.get("/", function (req, res) {
 res.send("ok");
@@ -63,15 +65,6 @@ app.get("/test",(req, res)=>{
                 res.status(404).send({ status: 404, error: true, message: `the movie ${id} does not exist` });
               }
             });
-
-            app.get("/movies/create",(req, res) => {
-              res.send(hi);
-              });
-              app.get("/movies/update",(req, res) => {
-                res.send(hi); });
-                app.get("/movies/delete",(req, res) => {
-                res.send(hi);
-                });
               //step8
               app.post("/movies/add",(req, res) => {
                if(!req.body.title || !req.body.year || req.body.year.length<4 || isNaN(req.body.year)){
